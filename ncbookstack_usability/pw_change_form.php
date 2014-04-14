@@ -94,7 +94,7 @@
                 </tr>
             </table>
             <input type = "submit" name="submit" value="Change Password" />
-            <a href="http://weblab.cs.uml.edu/~cburbine/session_test/ncbookstack_usability/home.php">
+            <a href="home.php">
                 <input type="button" value="Cancel" />
             </a>
         </form>
