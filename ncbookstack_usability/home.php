@@ -74,36 +74,7 @@ if (!isset($_SESSION['username'])) { //if not yet logged in
                 echo '<br>';
             }
 	    echo '</div>';
-           #echo '<div class="wantedBooks"><h3><strong>Wanted Books</strong></h3>';
-            #$wanted_data = mysql_query("SELECT * FROM wanted_books WHERE buyer LIKE '%$user%'") or die('Error: ' . mysql_error());
-
-            #while ($result = mysql_fetch_array($wanted_data)) {
-             #   $isbn2 = $result['isbn'];
-              #  $slice_data = mysql_query("SELECT * FROM bookslice1 WHERE isbn LIKE'%$isbn2%'") or die('Error slice: ' . mysql_error());
-               # while ($result_inner = mysql_fetch_array($slice_data)) {
-                    //echo '<div class="bookEntry">';
-		#    echo '<input type="radio" name="pass_val_W" value="' . $result_inner['isbn'] . '">';
-		 #   echo '<div class="bookEntry">';
-                  #  echo '<strong>Title</strong>: ' . $result_inner['title'];
-                   # echo '<br>';
-                    #echo '<strong>Edition</strong>: ' . $result_inner['edition'];
-                    #echo '<br>';
-                    #echo '<strong>Author(s)</strong>: ' . $result_inner['author'];
-                    #echo '<br>';
-                    #echo '<strong>Class Number</strong>: ' . $result_inner['subject_number'] . '.' . $result_inner['class_number'];
-                   # echo '<br>';
-                   # echo '<strong>ISBN</strong>: ' . $result_inner['isbn'];
-                   # echo '<br>';
-                    //radio button for remove funtion, passes isbn to function; major differnce with
-                    //buttons above is that the name is different, changed so removal function can tell 
-                    //the difference between books on the wanted list and books on the selling list
-                    //echo '<input type="radio" name="pass_val_W" value="' . $result_inner['isbn'] . '">';
-          #          echo '</div>';
-           #     }
-            #    echo'<br>';
-            #}
-	    #echo '</div>';
-	   
+            
 	   echo '<div class="wantedBooks"><h3><strong>Current Transactions</strong></h3>';
 	   $currtran_data = mysql_query("SELECT * FROM current_transactions WHERE seller = '$user' OR buyer = '$user'")or die("CURRTRAN: Error: ".mysql_error());
 	   while ($result = mysql_fetch_array($currtran_data)){
