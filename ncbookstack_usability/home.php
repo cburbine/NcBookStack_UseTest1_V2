@@ -37,7 +37,7 @@ if (!isset($_SESSION['username'])) { //if not yet logged in
     <body>
         
         <h1>Welcome <?php echo $_SESSION['username']; ?></h1>
-        <a href="logout.php">Logout </a>
+        <a href="logout.php">Logout </a> |
         <a href="pw_change_form.php"> Change Password </a> |
         <a href="search_v2.php"> Search for a book </a><br>
 
