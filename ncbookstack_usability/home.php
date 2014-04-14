@@ -43,22 +43,29 @@ if (!isset($_SESSION['username'])) { //if not yet logged in
 
         <?php
         echo '<br>';
+        //If user is signed in, populate page with user data
         if ($_SESSION['id']) {
+            
             $user = $_SESSION['username'];
+            
+            //Get data on books being sold by user
             $sale_data = mysql_query("SELECT * FROM books_for_sale WHERE seller LIKE'%$user%'") or die('Error: ' . mysql_error());
-            //creates a form which holds all entiries of bother wanted list and selling list
-            //needed for item remove function(s)
+            
+            //Create list of books being sold by user. 
+            //List is in a form which allows for books to be deleted from the list.
             echo '<form method="post" value="Delete" action="remove_book_v2.php">';
             echo '<input type="submit" name="delete" value="Delete Selected Book from List" id="delKey"><br>';
             echo '<div class="saleBooks"><h3><strong>Books for Sale</strong></h3>';
+            
             while ($result = mysql_fetch_array($sale_data)) {
                 $isbn = $result['isbn'];
-                //atm the adding functions do not set asking price will be updated later
+                //All asking prices will display as 0, user cannot change asking prices yet
                 $asking_price = $result['asking_price'];
                 echo '<span class="askPrice"><strong>Asking Price</strong>: $' . $asking_price . '</span><br>';
+                
+                //Display information for each book
                 $slice_data = mysql_query("SELECT * FROM bookslice1 WHERE isbn LIKE'%$isbn%'") or die('Error: ' . mysql_error());
                 while ($result_inner = mysql_fetch_array($slice_data)) {
-                    //echo '<div class="bookEntry">';
                     echo '<input type="radio" name="pass_val" value="' . $result_inner['isbn'] . '">';
                     echo '<div class="bookEntrySelling">';
                     echo '<strong>Title</strong>: ' . $result_inner['title'];
@@ -71,18 +78,16 @@ if (!isset($_SESSION['username'])) { //if not yet logged in
                     echo '<br>';
                     echo '<strong>ISBN</strong>: ' . $result_inner['isbn'];
                     echo '<br>';
-                    //radio button for remove funtion, passes isbn to function
-                    //echo '<input type="radio" name="pass_val" value="' . $result_inner['isbn'] . '">';
                     echo '</div>';
                 }
                 echo '<br>';
             }
             echo '</div>';
 
-            echo '<div class="wantedBooks"><h3><strong>Current Transactions</strong></h3>';
-            
+            //Get data on user transactions
             $currtran_data = mysql_query("SELECT * FROM current_transactions WHERE seller = '$user' OR buyer = '$user'") or die("CURRTRAN: Error: " . mysql_error());
             
+            echo '<div class="wantedBooks"><h3><strong>Current Transactions</strong></h3>';
             while ($result = mysql_fetch_array($currtran_data)) {
                 echo '<input type="radio" name="pass_valCT" value="' . $result['isbn'] . '">';
                 echo '<div class="bookEntry">';
