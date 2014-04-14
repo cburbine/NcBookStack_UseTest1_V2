@@ -22,6 +22,7 @@ if (!isset($_SESSION['username'])) { //if not yet logged in
     header("Location: login.php"); // send to login page
     exit;
 }
+
 ?>
 <html>
     <head>
@@ -32,42 +33,8 @@ if (!isset($_SESSION['username'])) { //if not yet logged in
     </head>
     <body>
         <h1>Welcome <?php echo $_SESSION['username']; ?></h1>
-        <a href="logout.php">Logout </a> | 
-        <!-- Password change input boxes, should either be placed on a separate
-            page to the home/user page or hidden with JavaScript.
-        -->
-        <!--<h4>Password Change Form</h4>
-        <form action="change_pswrd_v2.php" method="post">
-            <table>
-                <tr>
-                    <td>
-                        Enter old password: 
-                    </td>
-                    <td>
-                        <input type="password" name="old_password" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Enter new password: 
-                    </td>
-                    <td>
-                        <input type="password" name="new_password" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Re-enter new password: 
-                    </td>
-                    <td>
-                        <input type="password" name="re_new_password" />
-                    </td>
-                </tr>
-            </table>
-            <input type = "submit" name="submit" value="Change Password" />
-        </form>-->
+        <a href="logout.php">Logout </a>
 	<a href="pw_change_form.php"> Change Password </a> |
-        
         <a href="search_v2.php"> Search for a book </a><br>
 
         <?php
