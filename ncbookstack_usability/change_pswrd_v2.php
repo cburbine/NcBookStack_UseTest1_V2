@@ -18,7 +18,7 @@ if (empty($_SESSION)) { // if the session not yet started
 if (!isset($_POST['submit'])) { // if the form not yet submitted
     header("Location: pw_change_form.php");
     exit;
-    ;echo 'Name not set.  ';
+    echo 'Name not set.  ';
 }
 
 //gets data fomr user table for the pass word var

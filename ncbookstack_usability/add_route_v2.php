@@ -17,11 +17,6 @@ if (empty($_SESSION)) { // if the session not yet started
     session_start();
 }
 
-#if (!isset($_POST['submit'])) { // if the form not yet submitted
- #   header("Location: search.php");
-  #  exit;
-#}
-
 if($_GET['route'] != 1){
   header("Location: search_v2.php");
   exit;
