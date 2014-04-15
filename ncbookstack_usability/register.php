@@ -17,6 +17,7 @@ if(isset($_SESSION['username'])) { //if not yet logged in
   <head>
     <title>Sign Up</title>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/mainCSS.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js" type="text/javascript"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/additional-methods.min.js" type="text/javascript"></script>
@@ -66,6 +67,7 @@ if(isset($_SESSION['username'])) { //if not yet logged in
   </head>
   <body onload="init(); 
 		document.getElementById('username').focus();">
+                <h1> Registration Page </h1>
     <?php
        #echo "Return: ".$_GET["name"]."<br>";
        #if(isset($_GET["name"]) && $_GET["name"] == 'false'){
