@@ -37,7 +37,7 @@
     <body>
         <header>
         </header>
-        
+
         <a href="login.php">Return to Main Page</a><br><br>
 
         <!-- 
@@ -128,7 +128,34 @@
                     echo '<br><br>';
                     echo '</form>';
                     echo '</div>';
-
+                    ?>
+                    <div class="sellerAccordian">
+                        <h3>Students selling this book</h3>
+                        <div>
+                            <table class="sellerList">
+                                <tr>
+                                    <td>Student Name</td><td>Selling Price</td><td>Quality</td><td>Buy</td>
+                                <tr>
+                                <tr>
+                                    <td>John Smith</td><td>$98.00</td><td>Almost New</td>
+                                    <td><form action="../message.php"><input type="submit" value="Buy"></form></td>
+                                <tr>
+                                <tr>
+                                    <td>Mike Cooper</td><td>$82.00</td><td>Good</td>
+                                    <td><form action="../message.php"><input type="submit" value="Buy"></form></td>
+                                <tr>
+                                <tr>
+                                    <td>Tim Leblanc</td><td>$76.00</td><td>Used</td>
+                                    <td><form action="../message.php"><input type="submit" value="Buy"></form></td>
+                                <tr>
+                                <tr>
+                                    <td>Matt O'leary</td><td>$85.00</td><td>Good</td>
+                                    <td><form action="../message.php"><input type="submit" value="Buy"></form></td>
+                                <tr>
+                            </table>
+                        </div>
+                    </div>
+                    <?php
                     echo '</div>';
                 }
 
@@ -138,6 +165,7 @@
                 echo '<p>Request not found</p>';
             }
         } else {
+            
         }
         ?>
 
