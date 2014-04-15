@@ -137,7 +137,7 @@
                                     <td>Student Name</td><td>Selling Price</td><td>Quality</td><td>Buy</td>
                                 <tr>
                                 <tr>
-                                    <td>John Smith</td><td>$98.00</td><td>Almost New</td>
+                                    <td>Chris Burbine</td><td>$98.00</td><td>Almost New</td>
                                     <td>
                                         <form action="message_form.php"><input type="submit" value="Buy">
                                             <input type="hidden" name="isbn" value="0072848235">
