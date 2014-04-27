@@ -27,6 +27,23 @@ $seller  = $_GET['seller'];
 $isbn = $_GET['isbn'];
 $textm = $_POST['textm'];
 
+if($date == "" && $time == "empty"){
+  header('Location: message_form.php?seller='.$seller.'&isbn='.$isbn.'&datetime=false');
+  #echo "HERE";
+  exit;
+}
+if($date == ""){
+  header('Location: message_form.php?seller='.$seller.'&isbn='.$isbn.'&date=false');  
+  #echo $time;
+  #echo "fdfsdf ".$date." llll";
+  #echo 'message_form.php?seller='.$seller.'&isbn='.$isbn.'&date='.$time.'';
+  exit;
+}
+if($time == "empty"){
+  header('Location: message_form.php?seller='.$seller.'&isbn='.$isbn.'&time=false');
+  exit;
+}
+
 #echo $to . " " . $title . " " . $date . " " . $time ." ". $seller ." ". $isbn;
 
 $date_parts = explode("/", $date);
@@ -69,17 +86,19 @@ $t_date = $t_month."/".$t_day."/".$t_year;
 
 if($year < $t_year){
   #echo $year ."  ". $t_year;
-  header('Location: message_form.php?seller='.$seller.'&isbn='.$isbn.'&date=false');
+  #header('Location: message_form.php?seller='.$seller.'&isbn='.$isbn.'&date=false');
 } else if ($month < $t_month){
   #echo $month ."  ". $t_month;
-  header('Location: message_form.php?seller='.$seller.'&isbn='.$isbn.'&date=false');
+  #header('Location: message_form.php?seller='.$seller.'&isbn='.$isbn.'&date=false');
 } else if ($day < $t_day) {
   #echo $day ."  ". $t_day;
-  header('Location: message_form.php?seller='.$seller.'&isbn='.$isbn.'&date=false');
-} else if($t_date == $date){
-  header('Location: message_form.php?seller='.$seller.'&isbn='.$isbn.'&date=same');
-} else {
-  echo "out: time date ok";
+  #header('Location: message_form.php?seller='.$seller.'&isbn='.$isbn.'&date=false');
+} 
+else if($t_date == $date){
+  #header('Location: message_form.php?seller='.$seller.'&isbn='.$isbn.'&date=same');
+} 
+else {
+  #echo "out: time date ok";
   $s_data = mysql_query("SELECT * FROM tz_members WHERE usr = '".$seller."'")or die('S_DATA: Error: '.mysql_error());
   while($result = mysql_fetch_array($s_data)){
     $s_email = $result['email'];
@@ -108,10 +127,22 @@ if($year < $t_year){
 
   $t_timedate = $year."-".$month."-".$day." ".$hour.":".$min;
   #echo '<br>'.$t_timedate;
-  
-  $t_data = mysql_query("INSERT INTO current_transactions (seller, buyer, isbn, tradedate) VALUES ('".$seller."', '".$_SESSION['username']."', '".$isbn."', '".$year."-".$month."-".$day." ".$hour.":".$min."')")or die('T_DATA: Error: '.mysql_error());
 
-  header('Location: home.php');
+  echo 'At end of else ';
+  echo $isbn. ' ';  
+  $get_bfs = mysql_query("SELECT * FROM books_for_sale WHERE isbn = '".$isbn."'")or die ('GET AP: Error: '.mysql_error());
+  
+  while ($result = mysql_fetch_array($get_bfs)){
+    $ap = $result['asking_price'];
+    $ct_title = $result['title'];
+  }
+
+  echo ' Here|'.$ap.' '.$ct_title.'|Here';
+  
+  #echo $month."/".$day."/".$year." ".$hour.":".$min." ".$ampm;
+  $t_data = mysql_query("INSERT INTO current_transactions (seller, buyer, isbn, tradedate, asking_price, title) VALUES ('".$seller."', '".$_SESSION['username']."', '".$isbn."', '".$month."/".$day."/".$year." ".$hour.":".$min." ".$ampm."', '".$ap."','".$ct_title."')")or die('T_DATA: Error: '.mysql_error());
+
+  header('Location: home.php?mess=sent');
   #echo $s_email." ".$title." ".$textm." ".$_SESSION['username']." ".$b_email;
   #echo $title;
   #echo $textm;

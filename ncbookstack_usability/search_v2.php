@@ -1,4 +1,18 @@
 <!DOCTYPE html>
+<?php
+include 'connect_test.php'; //connect the connection page
+
+if(empty($_SESSION)){ // if the session not yet started
+  session_name('newLogin');
+  session_set_cookie_params(2*7*24*60*60);
+  session_start();
+}
+
+if(!isset($_SESSION['username'])) { //if not yet logged in
+  header("Location: login.php");// send to login page
+  exit;
+}
+?>
 <html>
     <head>
         <title>NC Bookstack - Book Search</title>
@@ -54,7 +68,7 @@
                 <option value="author">Author</option>
                 <option value="subject_number">Subject</option>
                 <option value="class_number">Class</option>
-                <option value="isbn">ISBN Number</option>
+                <option value="isbn">ISBN</option>
             </select>
             <input type="submit" name="search" value="Search" />
         </form>
@@ -112,31 +126,91 @@
                     echo '<span class="bookDetail">Subject number: ' . $result['subject_number'] . '</span>';
                     echo '<span class="bookDetail">Class number: ' . $result['class_number'] . '</span>';
                     echo '<span class="bookDetail">ISBN number: ' . $result['isbn'] . '</span>';
+	            $thisisbn = $result['isbn'];
 
                     echo '<form method="post" value="Add" action="add_route_v2.php?route=1">';
                     //value passer for adder function main differnce between this code 
                     //and normal serach code
                     echo '<input type="hidden" name="pass_val" value="' . $result['isbn'] . '">';
-                    echo 'Add to: ';
-                    ?>
-                    <select name="field" id="searchCriteria">
-                        <option value="books_for_sale">Books for Sale</option>
-                        <option value="wanted_books">Wanted Books</option>
-                    </select>
-                    <?php
-                    echo '<input type="submit" name="add" value="Submit" id="addKey">';
+		    echo '<br>';
+		    echo 'Asking Price: $<input type="text" name="ask_price">';
+		    echo '<br>Condition: ';
+		    ?>
+	<select name="conD">
+	  <option value="New">New</option>
+	  <option value="Good">Good</option>
+	  <option value="Used">Used</option>
+	  <option value="Bad">Bad</option>
+	  <option value="Very Bad">Very Bad</option>
+	</select><br>
+	            <?php
+                    echo '<input type="submit" name="field" value="Add to My Books for Sale" id="addKey">';
                     echo '<br><br>';
                     echo '</form>';
                     echo '</div>';
                     ?>
                     <div class="sellerAccordian">
-                        <h3>Students selling this book</h3>
+                        <h3>Users selling this book</h3>
                         <div>
-                            <table class="sellerList">
-                                <tr>
-                                    <td>Student Name</td><td>Selling Price</td><td>Quality</td><td>Buy</td>
-                                <tr>
-                                <tr>
+                            <table class="sellerList">  
+                                <!--<tr>
+                                    <td>Username</td><td>Asking Price</td><td>Condition</td>
+                                <tr>-->
+				<tr>
+				  <?php
+				     $sellerdata = mysql_query("SELECT * FROM books_for_sale WHERE isbn = '".$thisisbn."'")or die("Error: ".mysql_error());
+				     #echo "HERE".$thisisbn."HERE";
+				     #if(empty($sellerdata)){
+				      # echo "HERE";
+				     #} else {
+				      # echo "NOT HERE";
+				     #}
+				    # if(mysql_num_rows($sellerdata)==0){
+				     # #echo "ZERO ROWS";
+				    #  echo "No users currently selling this book.";
+				   # } else {
+				  #     echo '<tr>
+                                 #    <td>Username</td><td>Asking Price</td><td>Condition</td>
+                                #<tr>';
+				     #}
+				     if(mysql_num_rows($sellerdata)==0){
+				       echo "No users currently selling this book.";
+				     } else {
+				     while($result_bfs = mysql_fetch_array($sellerdata)){
+				       #echo "HIT";
+				       #echo "Seller: ".$result_bfs['seller'];
+				       #echo " Logged in: ". $_SESSION['username'];
+				       if($result_bfs['seller'] == $_SESSION['username'] && mysql_num_rows($sellerdata)==1){
+				         #echo "HERE";
+				         echo "No users currently selling this book.";
+				       } else if(mysql_num_rows($sellerdata)==0){
+				         echo "No users currently selling this book.";
+				       } else {
+				         #if(mysql_num_rows($sellerdata)==0){
+                                           #echo "ZERO ROWS";
+                                          # echo "No users currently selling this book.";
+                                         #} else {
+                                           echo '<tr>
+                                           <td>Username</td><td>Asking Price</td><td>Condition</td>
+                                           <tr>';
+                                         #}
+
+				         echo '<td>'.$result_bfs['seller'].'</td><td>$'.$result_bfs['asking_price'].'</td><td>'.$result_bfs['cond'].'</td>';
+				       
+				         $thisseller = $result_bfs['seller'];
+				         echo '<td>
+                                         <form action="message_form.php">
+					   <input type="submit" value="Request Trade">
+                                           <input type="hidden" name="isbn" value="'.$thisisbn.'">
+                                           <input type="hidden" name="seller" value="'.$thisseller.'">
+                                         </form>
+                                         </td>';
+				      }
+				     }
+			            }
+				     ?>
+				<tr>
+                                <!--<tr>
                                     <td>Chris Burbine</td><td>$98.00</td><td>Almost New</td>
                                     <td>
                                         <form action="message_form.php"><input type="submit" value="Buy">
@@ -171,7 +245,7 @@
                                             <input type="hidden" name="seller" value="cburbine">
                                         </form>
                                     </td>
-                                <tr>
+                                <tr>-->
                             </table>
                         </div>
                     </div>

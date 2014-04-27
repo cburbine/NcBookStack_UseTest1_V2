@@ -23,43 +23,35 @@ if($_GET['route'] != 1){
 }
 
 if (isset($_POST['field'])) {
+  #echo 'Top ';
     $isbn = $_POST['pass_val'];
-    $field = $_POST['field'];
-    
+    $conD = $_POST['conD'];
+    $asking_p = $_POST['ask_price'];
+    #$field = $_POST['field'];
+    #echo 'Cond: '.$asking_p. ' |';
     //needed for checker functions
     $count_list = 0;
-    $count_have = 0;
+    $count_have = 0;	    
 
-    //here begins some checker functions, not used in this build
-    //will be used in the future
-    $data = mysql_query("SELECT * FROM wanted_books WHERE buyer LIKE '%$user%'") or die('Error: ' . mysql_error());
+    $data = mysql_query("SELECT * FROM bookslice1  WHERE isbn = '".$isbn."'") or die('Error: ' . mysql_error());
 
     while ($result = mysql_fetch_array($data)) {
-        if ($result['isbn'] == $isbn) {
-            $count_list++;
-            echo $count_list;
-        }
+      $title     = $result['title'];
+      $edition   = $result['edition'];
+      $author    = $result['author'];
+      $sub_num   = $result['subject_number'];
+      $class_num = $result['class_number'];
+      if($asking_p == ""){
+        $asking_p = $result['price'];
+	#echo $asking_p;
+      }
     }
-    $data = mysql_query("SELECT * FROM books_for_sale WHERE seller LIKE '%$user%'") or die('Error: ' . mysql_error());
-
-    while ($result = mysql_fetch_array($data)) {
-        if ($result['isbn'] == $isbn) {
-            $count_have++;
-            echo $count_have;
-        }
-    }
+    #echo 'Bot ';
+    #echo $title.' '.$edition.' '.$author.' '.$sub_num.' '.$class_num;
     //here ends checker functions
+      
+      $data_b = mysql_query("INSERT INTO books_for_sale (isbn, seller, cond, asking_price, title, edition, author, subject_number, class_number) VALUES ('" . $isbn . "', '" . $_SESSION['username'] . "', '".$conD."', '".$asking_p."', '".$title."', '".$edition."', '".$author."', '".$sub_num."', '".$class_num."')") or die(mysql_error());
+      header("Location: search_v2.php");
     
-    //checks if the field selected was wanted_books 
-    if ($field == 'wanted_books') {
-        //if wanted_books it inserts the isbn and currently login user name into the wanted_books table
-        $data_w = mysql_query("INSERT INTO wanted_books (isbn, buyer) VALUES ('" . $isbn . "', '" . $_SESSION['username'] . "')") or die(mysql_error());
-        header("Location: search_v2.php");
-    // checks if the field selected was books_for_sale
-    } else if ($field == 'books_for_sale') {
-        //if books_for_sale it inserts the isbn and currently login user name into the books_for_sale table
-        $data_b = mysql_query("INSERT INTO books_for_sale (isbn, seller) VALUES ('" . $isbn . "', '" . $_SESSION['username'] . "')") or die(mysql_error());
-        header("Location: search_v2.php");
-    }
 }
 ?>

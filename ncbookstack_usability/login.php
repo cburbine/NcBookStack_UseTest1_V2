@@ -56,6 +56,6 @@ if (isset($_SESSION['username'])) { // if already login
             <input class="button" type="submit" name="submit" value="Login" />
 	    <!-- regis button -->
         </form>
-	<p>Not a member sign up <a href="register.php">here</a>. </p>
+	<p style="text-align:center;">Not a member? Sign up <a href="register.php">here</a>. </p>
     </body>
 </html>

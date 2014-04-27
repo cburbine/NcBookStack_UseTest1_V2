@@ -37,22 +37,26 @@ a {
 
 img {
     float: left;
-    width: 150px;
-    height: 200px;
+    width: 175px;
+    height: 250px;
     margin: 10px;
 }
 
 .bookEntry, .bookEntrySelling {
-    padding: 10px;
-    /*white-space: normal;*/
-    vertical-align: -79px;
-    display: inline-block;
-    /* if you need ie6/7 support */
+    /*padding: 10px;*/
+    /*white-space: normal;
+    /*vertical-align: -79px;
+    display: inline-block;*/
+    /* if you need ie6/7 support*/ 
     /**display: inline;
     zoom: 1*/
-    padding-bottom: 25px;
+    /*padding-bottom: 25px;*/
+    /*float: left;*/
     
 }
+/*checkbox{
+    float:right;
+}*/
 
 .wantedBooks, .saleBooks{
     float: left;

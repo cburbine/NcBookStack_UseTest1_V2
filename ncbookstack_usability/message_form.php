@@ -20,35 +20,21 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/mainCSS.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+    <!--<script src="//code.jquery.com/jquery-1.9.1.js"></script>-->
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <!--<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
+    <script src="/resources/demos/external/jquery.mousewheel.js"></script>
+    <script src="/resources/demos/external/globalize.js"></script>
+    <script src="/resources/demos/external/globalize.culture.de-DE.js"></script>
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script>
       $(function() {
-      $("#datepicker").datepicker();
-      });
-      $(document).ready(function() {
-      $('#message').validate({
-      rules: { 
-      title: {
-      required: true 
-      }
-      },
-      messages: { 
-      title: { 
-      required: "* Please enter your old password." 
-      }
-      }
-      });
-      });
-
-      function init() {
-        message = document.getElementById("message");
-      }
+      $("#datepicker").datepicker({ minDate: 1});
+      });			  
     </script>
   </head>
-  <body onload="init();
-                document.getElementById('title').focus();">
+  <body>
     <!--<?php
        echo "<form id='message' name='message' method='post' action='mess_helper.php?seller=".$_GET['seller']."&isbn=".$_GET['isbn']."'>";
       ?>-->
@@ -56,23 +42,12 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
       <!--To:<input type="text" name="to" /><br>-->
      <p>Please enter a time and date for a trade meeting.</p>
       Meeting Date:<input type="text" name="date" id="datepicker" />
-      at: <select name="time" id="time">
+      at:
+     <select name="time" id="time">-->
         <!-- Taken from http://snipplr.com/view/28563/
              original by user alvincrespo-->
-        <option value=""></option>
+       <option value="empty"></option>
         
-        <option value="6:00 AM">6:00 AM</option>
-        <option value="6:15 AM">6:15 AM</option>
-        <option value="6:30 AM">6:30 AM</option>
-        <option value="6:45 AM">6:45 AM</option>
-
-        <option value="7:00 AM">7:00 AM</option>
-        <option value="7:15 AM">7:15 AM</option>
-        <option value="7:30 AM">7:30 AM</option>
-        <option value="7:45 AM">7:45 AM</option>
-	
-        <option value="8:00 AM">8:00 AM</option>
-        <option value="8:15 AM">8:15 AM</option>
         <option value="8:30 AM">8:30 AM</option>
         <option value="8:45 AM">8:45 AM</option>
 
@@ -151,8 +126,14 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
         <option value="11:30 PM">11:30 PM</option>
         <option value="11:45 PM">11:45 PM</option>
       </select><br><br>
+    <!-- <select id="meeting_place">
+       
+     </select>-->
      <textarea rows="15" cols="75" name="textm" id="textm"></textarea><br>
-     <input type="submit" name="submit" value="Send Message" /><br>    
+     <input type="submit" name="submit" value="Send Message" />
+     <!--<a href="home.php">-->
+     <input type="button" value="Cancel" onclick="history.go(-1);return true;"/>
+     <!--</a>-->
     </form>
   </body>
 </html>
