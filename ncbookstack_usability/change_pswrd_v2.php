@@ -15,6 +15,10 @@ if (empty($_SESSION)) { // if the session not yet started
     session_set_cookie_params(2 * 7 * 24 * 60 * 60);
     session_start();
 }
+if (!isset($_SESSION['username'])) { //if not yet logged in
+    header("Location: login.php?nologin=1"); // send to login page
+    exit;
+}
 if (!isset($_POST['submit'])) { // if the form not yet submitted
     header("Location: pw_change_form.php");
     exit;
@@ -34,7 +38,7 @@ while ($row_query = mysql_fetch_array($query_result)) {
             //update pass word
             $change_query = "UPDATE tz_members SET pass = '" . $_POST['new_password'] . "' WHERE usr = '" . $_SESSION['username'] . "'";
             $change_result = mysql_query($change_query) or die(mysql_error());
-            header('Location: home.php?pwnew=1');
+            header('Location: mypage.php?pwnew=1');
 	    exit;
         } else {
             ;echo 'Invalid Password<br>';

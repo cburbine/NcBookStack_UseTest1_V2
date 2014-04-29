@@ -16,7 +16,7 @@ if (empty($_SESSION)) { // if the session not yet started
 }
 
 if (isset($_SESSION['username'])) { // if already login
-    header("location: home.php"); // send to home page
+    header("location: mypage.php"); // send to home page
     exit;
 }
 ?>
@@ -25,10 +25,15 @@ if (isset($_SESSION['username'])) { // if already login
         <meta charset="UTF-8">
         <title>NC Bookstack - A used book store for UML students</title>
         
+	<?php
+	   $notsearch = 1;
+	   $onlogin = 1;
+	   include 'toptab.php'; ?>
         <link rel="stylesheet" type="text/css" href="css/mainCSS.css">
+	<link rel="stylesheet" type="text/css" href="jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
     </head>
     <body>
-        <h3 class="loginTitle">Please enter a username and password to log in.</h3>
+        <h3 class="loginTitle">Please enter a username and password</h3>
         <form action = "login_pro.php" method = "post">
             <table class="loginTable">
                 <tr>
@@ -37,11 +42,7 @@ if (isset($_SESSION['username'])) { // if already login
                     </td> 
                     <td>
                         <input type="text" name="username" />
-			<?php
-                           if(isset($_GET["unpw"]) && $_GET["unpw"] == 0){
-                             echo "<strong>* Your username or password are invalid.</strong>";
-                           }
-                           ?>
+			
                     </td>
                 </tr>
                 <tr>
@@ -51,9 +52,27 @@ if (isset($_SESSION['username'])) { // if already login
                     <td>
                         <input type="password" name="password" />
                     </td>
+		    <?php
+		       if(isset($_GET["unpw"]) && $_GET["unpw"] == 0){
+		       ?>
+		    <p style="text-align:center;"><strong style="text-align:center;" class="logerr">* Your username or password is invalid.</strong></p>
+		    <?php
+		       }	
+		       if(isset($_GET["nologin"]) && $_GET["nologin"] == 1){
+		       ?>
+		       <p style="text-align:center;"><strong style="text-align:center;" class="logerr">* You must login first to view that page.</strong></p>
+		       <?php
+		       }
+		       ?>
+
                 </tr>
+
             </table>
-            <input class="button" type="submit" name="submit" value="Login" />
+	    
+
+	    <div class="buttonholder">
+            <input type="submit" name="submit" value="Login" />
+	    </div>
 	    <!-- regis button -->
         </form>
 	<p style="text-align:center;">Not a member? Sign up <a href="register.php">here</a>. </p>

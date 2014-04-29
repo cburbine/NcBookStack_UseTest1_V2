@@ -13,7 +13,7 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
 }
 
 if(!isset($_POST['submit'])) { // if the form not yet submitted
-  header("Location: home.php?set=0");
+  header("Location: mypage.php?set=0");
   exit;
 }
 
@@ -142,7 +142,7 @@ else {
   #echo $month."/".$day."/".$year." ".$hour.":".$min." ".$ampm;
   $t_data = mysql_query("INSERT INTO current_transactions (seller, buyer, isbn, tradedate, asking_price, title) VALUES ('".$seller."', '".$_SESSION['username']."', '".$isbn."', '".$month."/".$day."/".$year." ".$hour.":".$min." ".$ampm."', '".$ap."','".$ct_title."')")or die('T_DATA: Error: '.mysql_error());
 
-  header('Location: home.php?mess=sent');
+  header('Location: mypage.php?mess=sent');
   #echo $s_email." ".$title." ".$textm." ".$_SESSION['username']." ".$b_email;
   #echo $title;
   #echo $textm;

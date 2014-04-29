@@ -11,7 +11,7 @@
         }
 
         if (!isset($_SESSION['username'])) { //if not yet logged in
-            header("Location: login.php"); // send to login page
+            header("Location: login.php?nologin=1"); // send to login page
             exit;
         }
         ?>
@@ -93,8 +93,8 @@
                     </td>
                 </tr>
             </table>
-            <input type = "submit" name="submit" value="Change Password" />
-            <a href="home.php">
+            <input type="submit" name="submit" value="Change Password" />
+            <a href="mypage.php">
                 <input type="button" value="Cancel" />
             </a>
         </form>

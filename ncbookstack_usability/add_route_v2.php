@@ -16,6 +16,10 @@ if (empty($_SESSION)) { // if the session not yet started
     session_set_cookie_params(2 * 7 * 24 * 60 * 60);
     session_start();
 }
+if (!isset($_SESSION['username'])) { //if not yet logged in
+    header("Location: login.php?nologin=1"); // send to login page
+    exit;
+}
 
 if($_GET['route'] != 1){
   header("Location: search_v2.php");

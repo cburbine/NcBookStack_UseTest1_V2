@@ -15,6 +15,11 @@ if (empty($_SESSION)) { // if the session not yet started
     session_set_cookie_params(2 * 7 * 24 * 60 * 60);
     session_start();
 }
+if (!isset($_SESSION['username'])) { //if not yet logged in
+    header("Location: login.php?nologin=1"); // send to login page
+    exit;
+}
+
 #echo 'Here ';
 $pass_val = $_POST['pass_val'];
 #echo $pass_val[1] ." |";
@@ -37,9 +42,9 @@ if($removetype == "transcan" || $removetype == ""){
         $delete_data = mysql_query("DELETE FROM current_transactions WHERE isbn='$entry_parts[1]' LIMIT 1")or die('Error: '.mysql_error());
       }
     }
-    header('Location: home.php');
+    header('Location: mypage.php');
   } else {
-    header('Location: home.php?select=0');
+    header('Location: mypage.php?select=0');
   }
 } else if($removetype == "transfin"){
   #echo 'Here';
@@ -59,9 +64,9 @@ if($removetype == "transcan" || $removetype == ""){
 	$delete_data_BFS = mysql_query("DELETE FROM books_for_sale WHERE isbn='$entry_parts[1]' LIMIT 1")or die('Error: '.mysql_error());
       }
     }
-    header('Location: home.php');
+    header('Location: mypage.php');
   } else {
-    header('Location: home.php?select=0');
+    header('Location: mypage.php?select=0');
   }
 }
 ?>

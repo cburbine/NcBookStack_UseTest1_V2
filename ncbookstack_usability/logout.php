@@ -1,4 +1,4 @@
-<!-- 
+B0;136;0c<!-- 
 File: logout.php
 Author: cburbine
 Course: 91.462 - GUI II Programming
@@ -16,6 +16,6 @@ unset($_SESSION['username']);
 unset($_SESSION['id']);
 session_destroy();
 
-header("Location: login.php");
+header("Location: home.php");
 exit;
 ?>

@@ -28,6 +28,9 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
         
         Description: This page will allow the user to search for books and display search results.
         -->
+	<?php
+           $onsearch == 1;
+           include 'toptab.php'; ?>
 
         <!-- jQuery UI theme roller css -->
         <link rel="stylesheet" type="text/css" href="jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
@@ -46,22 +49,26 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
         <script src="js/search.js"></script>
         <script src="js/autoComplete.js"></script>
         <script src="js/searchAccordian.js"></script>
-
+	<?php
+	   //$onsearch == 1;
+	   //include 'toptab.php'; ?>
     </head>
     <body>
         <header>
         </header>
 
-        <a href="login.php">Return to Main Page</a><br><br>
+        <!--<a href="login.php">Return to Main Page</a><br><br>-->
 
         <!-- 
         form for searching
         Submitting will refresh page with data being sent via post method.
         -->
-        <form name="search" method="post" action="search_v2.php">
-            Search for: 
+	<br><br>
+        <form id="serachfrm" name="search" method="post" action="search_v2.php">
+            <span class="serachspan" style="font-size:125%;">Search for:</span> 
             <!--Search value -->
-            <input type="text" name="find" id="find"> in
+            <input type="text" name="find" id="find"> 
+	    <span class="serachspan" style="font-size:125%;">in</span>
             <!--Category to search in-->
             <select name="field" id="searchCriteria">
                 <option value="title">Title</option>
@@ -70,7 +77,7 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
                 <option value="class_number">Class</option>
                 <option value="isbn">ISBN</option>
             </select>
-            <input type="submit" name="search" value="Search" />
+            <input id="searchfrm" type="submit" name="search" value="Search" />
         </form>
 
         <?php
@@ -93,7 +100,7 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
             $data = mysql_query("SELECT * FROM bookslice1 WHERE $field LIKE'%$find%'");
 
             //Displaying search results
-            echo '<b>Searched for:</b> ' . $find . '<b> in category </b>' . $field;
+            echo '<p id="serachres"><b>Searched for:</b> ' . $find . '<b> in category </b>' . $field. '</p>';
 
             echo '<h2>Found: </h2>';
 
@@ -118,7 +125,7 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
                     echo '<h3><span class="bookDetail">Title: ' . $result['title'] . '</span></h3>';
                     echo '<div>';
 
-                    echo '<img src="data:image/jpeg;base64,' . base64_encode($result['image']) . '" />';
+                    echo '<img class="bookimg" src="data:image/jpeg;base64,' . base64_encode($result['image']) . '" />';
                     echo '<div class="bookEntry">';
                     echo '<span class="bookDetail">Edition number: ' . $result['edition'] . '</span>';
                     echo '<span class="bookDetail">Author(s): ' . $result['author'] . '</span>';
@@ -159,44 +166,31 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
 				<tr>
 				  <?php
 				     $sellerdata = mysql_query("SELECT * FROM books_for_sale WHERE isbn = '".$thisisbn."'")or die("Error: ".mysql_error());
-				     #echo "HERE".$thisisbn."HERE";
-				     #if(empty($sellerdata)){
-				      # echo "HERE";
-				     #} else {
-				      # echo "NOT HERE";
-				     #}
-				    # if(mysql_num_rows($sellerdata)==0){
-				     # #echo "ZERO ROWS";
-				    #  echo "No users currently selling this book.";
-				   # } else {
-				  #     echo '<tr>
-                                 #    <td>Username</td><td>Asking Price</td><td>Condition</td>
-                                #<tr>';
-				     #}
+				     $writetop = 0;
 				     if(mysql_num_rows($sellerdata)==0){
 				       echo "No users currently selling this book.";
 				     } else {
 				     while($result_bfs = mysql_fetch_array($sellerdata)){
-				       #echo "HIT";
-				       #echo "Seller: ".$result_bfs['seller'];
-				       #echo " Logged in: ". $_SESSION['username'];
 				       if($result_bfs['seller'] == $_SESSION['username'] && mysql_num_rows($sellerdata)==1){
 				         #echo "HERE";
 				         echo "No users currently selling this book.";
-				       } else if(mysql_num_rows($sellerdata)==0){
+				         
+				     } else if(mysql_num_rows($sellerdata)==0){
 				         echo "No users currently selling this book.";
 				       } else {
 				         #if(mysql_num_rows($sellerdata)==0){
                                            #echo "ZERO ROWS";
                                           # echo "No users currently selling this book.";
                                          #} else {
-                                           echo '<tr>
-                                           <td>Username</td><td>Asking Price</td><td>Condition</td>
-                                           <tr>';
+				           #$writetop = 0;
+				           if($writetop == 0){
+                                                echo '<tr><td>Username</td><td>Asking Price</td><td>Condition</td><tr>';
+						$writetop++;
+					     }
                                          #}
 
-				         echo '<td>'.$result_bfs['seller'].'</td><td>$'.$result_bfs['asking_price'].'</td><td>'.$result_bfs['cond'].'</td>';
-				       
+				         echo '<tr><td>'.$result_bfs['seller'].'</td><td>$'.$result_bfs['asking_price'].'</td><td>'.$result_bfs['cond'].'</td>';
+				         
 				         $thisseller = $result_bfs['seller'];
 				         echo '<td>
                                          <form action="message_form.php">
@@ -204,7 +198,7 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
                                            <input type="hidden" name="isbn" value="'.$thisisbn.'">
                                            <input type="hidden" name="seller" value="'.$thisseller.'">
                                          </form>
-                                         </td>';
+                                         </td> <tr>';
 				      }
 				     }
 			            }

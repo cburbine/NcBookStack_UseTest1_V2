@@ -9,7 +9,7 @@ if(empty($_SESSION)){ // if the session not yet started
 }
 
 if(!isset($_SESSION['username'])) { //if not yet logged in
-  header("Location: login.php");// send to login page
+  header("Location: login.php?nologin=1");// send to login page
   exit;
 }
 ?>
@@ -18,8 +18,12 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
   <head>
     <title>New Message</title>
     <meta charset="UTF-8">
+    <?php
+       $notsearch = 1;
+       include 'toptab.php'; ?>
     <link rel="stylesheet" type="text/css" href="css/mainCSS.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
+    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">-->
     <!--<script src="//code.jquery.com/jquery-1.9.1.js"></script>-->
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <!--<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
@@ -40,9 +44,9 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
       ?>-->
     <form id="message" name="message" method="post" action="mess_helper.php?seller=<?php echo $_GET['seller']; ?>&isbn=<?php echo $_GET['isbn']; ?>">
       <!--To:<input type="text" name="to" /><br>-->
-     <p>Please enter a time and date for a trade meeting.</p>
-      Meeting Date:<input type="text" name="date" id="datepicker" />
-      at:
+     <p class="meesp" style="font-size: 115%;">Please enter a time and date for a trade meeting.</p>
+      <span class="messp">Meeting Date:</span><input class="datepicker" type="text" name="date" id="datepicker" />
+      <span class="messp">at:</span>
      <select name="time" id="time">-->
         <!-- Taken from http://snipplr.com/view/28563/
              original by user alvincrespo-->
@@ -129,7 +133,7 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
     <!-- <select id="meeting_place">
        
      </select>-->
-     <textarea rows="15" cols="75" name="textm" id="textm"></textarea><br>
+     <textarea class="messp" rows="15" cols="75" name="textm" id="textm"></textarea><br>
      <input type="submit" name="submit" value="Send Message" />
      <!--<a href="home.php">-->
      <input type="button" value="Cancel" onclick="history.go(-1);return true;"/>

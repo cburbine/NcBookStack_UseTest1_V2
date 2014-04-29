@@ -52,7 +52,7 @@ if($name_check > 0){
      if($row_query['pass']==$pswrd){
        $_SESSION['username'] = $row_query['usr'];
        $_SESSION['id'] =  $row_query['id'];
-       header("Location: home.php");
+       header("Location: mypage.php");
        exit;	 
      }
    }
